@@ -8,13 +8,22 @@ function Home() {
   const city = 'Guarapari';
 
   useEffect(() => {
-    getWeatherByCity(city).then(setWeather).catch(console.error);
+    const fetchWeather = async () => {
+      try {
+        const data = await getWeatherByCity(city);
+        setWeather(data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchWeather();
   }, []);
 
   return (
-    <div className="home-page">
+    <div className="flex flex-col items-center">
       <SearchBarWithLogo />
-      <h1>Previsão do Tempo</h1>
       {weather ? <WeatherCard data={weather} /> : <p>Carregando...</p>}
     </div>
   );
