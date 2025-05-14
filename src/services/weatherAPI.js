@@ -1,4 +1,4 @@
-const API_KEY = import.meta.env.REACT_APP_API_KEY;
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export async function getWeatherByCity(city) {
   const response = await fetch(
