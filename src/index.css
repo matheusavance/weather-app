@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
 
 :root {
   font-family: Plus Jakarta Sans, system-ui, Avenir, Helvetica, Arial, sans-serif;

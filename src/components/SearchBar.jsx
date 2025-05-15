@@ -1,13 +1,13 @@
 function SearchBar({ city, setCity, clickButton }) {
   return (
-    <div className="flex flex-col items-center pb-4">
+    <div className="flex flex-col items-center pb-8">
       <div>
         <input
           type="text"
           placeholder="Type the name of the city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-[300px] px-4 py-2 mr-2 hover:bg-px-4 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-[300px] px-4 py-2 mr-2 hover:bg-px-4 border border-gray-300 rounded-xl"
         />
         <button
           onClick={clickButton}

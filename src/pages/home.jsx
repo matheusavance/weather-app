@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getWeatherByCity } from '../services/weatherAPI';
 import WeatherCard from '../components/WeatherCard';
 import SearchBar from '../components/SearchBar';
@@ -12,16 +12,17 @@ function Home() {
     try {
       const data = await getWeatherByCity(city);
       setWeather(data);
+      setCity('');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-8">
       <Logo />
       <SearchBar city={city} setCity={setCity} clickButton={clickButton} />
-      {weather ? <WeatherCard data={weather} city={city} /> : <p>Loading...</p>}
+      {weather && <WeatherCard data={weather} city={city} />}
     </div>
   );
 }
