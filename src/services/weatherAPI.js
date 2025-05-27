@@ -4,7 +4,9 @@ export async function getWeatherByCity(city) {
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=en`,
   );
-  if (!response.ok) throw new Error('Error loading data from getWeatherByCity');
+  if (!response.ok) {
+    return response.json();
+  }
 
   return response.json();
 }

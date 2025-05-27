@@ -14,7 +14,7 @@ function WeatherCardByCords({ data }) {
         </h1>
       </div>
       <div className="text-2xl font-bold">{temperature} °C</div>
-      <div className="[&::first-letter]:uppercase lowercase pb-4">
+      <div className="first-letter:uppercase pb-4">
         {data.current.weather[0].description}
       </div>
       <div className="flex gap-6">
