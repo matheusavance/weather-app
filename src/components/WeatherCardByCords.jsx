@@ -5,7 +5,7 @@ function WeatherCardByCords({ data }) {
 
   return (
     <div
-      className="inline-block border-1 border-[#474747] rounded-xl p-4 text bg-[#474747]"
+      className="fade-down inline-block border-1 border-[#474747] rounded-xl p-4 text bg-[#474747]"
       data-taos-offset="500"
     >
       <div className="flex mb-4">

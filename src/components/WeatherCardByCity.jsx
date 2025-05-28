@@ -1,10 +1,14 @@
+import { motion } from 'framer-motion';
+
 function WeatherCardByCity({ data }) {
   const temperature = Math.round(data.main.temp);
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       className="inline-block border-1 border-[#474747] rounded-xl p-4 text bg-[#474747]"
-      data-taos-offset="500"
     >
       <div className="flex mb-4">
         <h1 className="text-[24px] font-semibold">{data.name}</h1>
@@ -23,7 +27,7 @@ function WeatherCardByCity({ data }) {
           <p>{data.wind.speed} MPH</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -4,7 +4,7 @@ import WeatherCardByCity from '../components/WeatherCardByCity';
 import WeatherCardByCords from '../components/WeatherCardByCords';
 import SearchBar from '../components/SearchBar';
 import Logo from '../components/Logo';
-import CaseDiv from '../components/CaseDiv';
+import FailMessage from '../components/FailMessage';
 
 function Home() {
   const [weather, setWeather] = useState(null);
@@ -12,6 +12,7 @@ function Home() {
   const [weatherByCords, setWeatherByCords] = useState(null);
   const [coordinates, setCoordinates] = useState(null);
   const [failMessage, setFailMessage] = useState(null);
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -54,17 +55,18 @@ function Home() {
   const clickButton = async () => {
     try {
       const data = await getWeatherByCity(city);
+
       if (data.cod != '200') {
         setWeatherByCords(null);
-        setFailMessage(data.message);
         setWeather(null);
+        setFailMessage(data.message);
         setCity('');
-        console.log(failMessage);
       } else {
         setWeatherByCords(null);
         setWeather(data);
         setFailMessage(null);
         setCity('');
+        setKey((prevKey) => prevKey + 1);
       }
     } catch (error) {
       console.error(error);
@@ -76,8 +78,8 @@ function Home() {
       <Logo />
       <SearchBar city={city} setCity={setCity} clickButton={clickButton} />
       {weatherByCords && <WeatherCardByCords data={weatherByCords} />}
-      {weather && <WeatherCardByCity data={weather} city={city} />}
-      {failMessage && <CaseDiv data={failMessage} />}
+      {weather && <WeatherCardByCity data={weather} city={city} key={key} />}
+      {failMessage && <FailMessage data={failMessage} key={key} />}
     </div>
   );
 }
