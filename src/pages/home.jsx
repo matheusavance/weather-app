@@ -29,6 +29,7 @@ function Home() {
             'Permission has not yet been given. The browser will ask for it.',
           );
         } else if (result.state === 'denied') {
+          setFailMessage('Location denied by user');
           console.log('Location denied by user.');
         }
       });
@@ -78,8 +79,8 @@ function Home() {
       <Logo />
       <SearchBar city={city} setCity={setCity} clickButton={clickButton} />
       {weatherByCords && <WeatherCardByCords data={weatherByCords} />}
-      {weather && <WeatherCardByCity data={weather} city={city} key={key} />}
-      {failMessage && <FailMessage data={failMessage} key={key} />}
+      {weather && <WeatherCardByCity data={weather} key={key} />}
+      {failMessage && <FailMessage data={failMessage} />}
     </div>
   );
 }
