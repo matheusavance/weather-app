@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getWeatherByCity, getWeatherByCords } from '../services/weatherAPI';
+import {
+  getWeatherByCity,
+  getWeatherByCords,
+  getCityData,
+} from '../services/weatherAPI';
 import WeatherCardByCity from '../components/WeatherCardByCity';
 import WeatherCardByCords from '../components/WeatherCardByCords';
 import SearchBar from '../components/SearchBar';
@@ -34,7 +38,7 @@ function Home() {
         }
       });
     } else {
-      console.log('Permissions API não suportada neste navegador.');
+      console.log('Permissions API is not supported in this browser.');
     }
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -56,6 +60,8 @@ function Home() {
   const clickButton = async () => {
     try {
       const data = await getWeatherByCity(city);
+      const data2 = await getCityData();
+      console.log(data2);
 
       if (data.cod != '200') {
         setWeatherByCords(null);

@@ -20,3 +20,12 @@ export async function getWeatherByCords(latitude, longitude) {
 
   return response.json();
 }
+
+export async function getCityData() {
+  const response = await fetch('/cities');
+  if (!response.ok) {
+    return response.json();
+  }
+
+  return response.json();
+}
