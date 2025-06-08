@@ -9,6 +9,7 @@ fastify.get('/cities', async (request, reply) => {
     const filePath = path.join(__dirname, 'cities.json');
     const jsonData = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(jsonData);
+    // const cityNames = cities.map((city) => city.name);
   } catch (err) {
     reply.code(500).send({ error: 'Error reading JSON file.' });
   }

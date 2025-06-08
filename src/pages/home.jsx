@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import {
-  getWeatherByCity,
-  getWeatherByCords,
-  getCityData,
-} from '../services/weatherAPI';
+import { getWeatherByCity, getWeatherByCords } from '../services/weatherAPI';
 import WeatherCardByCity from '../components/WeatherCardByCity';
 import WeatherCardByCords from '../components/WeatherCardByCords';
 import SearchBar from '../components/SearchBar';
 import Logo from '../components/Logo';
 import FailMessage from '../components/FailMessage';
+import SearchResultsList from '../components/SearchResultsList';
 
 function Home() {
   const [weather, setWeather] = useState(null);
@@ -17,6 +14,8 @@ function Home() {
   const [coordinates, setCoordinates] = useState(null);
   const [failMessage, setFailMessage] = useState(null);
   const [key, setKey] = useState(0);
+  const [input, setInput] = useState();
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -60,8 +59,6 @@ function Home() {
   const clickButton = async () => {
     try {
       const data = await getWeatherByCity(city);
-      const data2 = await getCityData();
-      console.log(data2);
 
       if (data.cod != '200') {
         setWeatherByCords(null);
@@ -80,10 +77,38 @@ function Home() {
     }
   };
 
+  async function getCityData(value) {
+    try {
+      const response = await fetch('/cities');
+      const json = await response.json();
+      const results = json.filter(
+        (city) =>
+          value && city && city.name && city.name.toLowerCase().includes(value),
+      );
+      const filteredResults = results.slice(0, 20);
+      setResults(filteredResults);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  const handleChange = (value) => {
+    setInput(value);
+    getCityData(value);
+  };
+
   return (
     <div className="flex flex-col items-center pt-8">
       <Logo />
-      <SearchBar city={city} setCity={setCity} clickButton={clickButton} />
+      <SearchBar
+        city={city}
+        setCity={setCity}
+        clickButton={clickButton}
+        handleChange={handleChange}
+        setResults={setResults}
+      />
+      {input && results.length > 0 && <SearchResultsList results={results} />}
       {weatherByCords && <WeatherCardByCords data={weatherByCords} />}
       {weather && <WeatherCardByCity data={weather} key={key} />}
       {failMessage && <FailMessage data={failMessage} />}
